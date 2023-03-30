@@ -1,20 +1,32 @@
+function sendSpeed (speed: number) {
+    if (input.rotation(Rotation.Roll) < -45) {
+        basic.showString("L")
+        radio.sendValue("L", speed)
+    } else if (input.rotation(Rotation.Roll) > 45) {
+        basic.showString("R")
+        radio.sendValue("R", speed)
+    } else {
+        basic.showString("F")
+        radio.sendValue("LR", speed)
+    }
+}
 radio.setGroup(1)
 basic.forever(function () {
     if (input.rotation(Rotation.Pitch) < -70) {
         basic.showString("4")
-        radio.sendValue("LR", 1023)
+        sendSpeed(1023)
     } else if (input.rotation(Rotation.Pitch) < 0) {
         basic.showString("3")
-        radio.sendValue("LR", 767)
+        sendSpeed(511)
     } else if (input.rotation(Rotation.Pitch) < 30) {
         basic.showString("2")
-        radio.sendValue("LR", 511)
+        sendSpeed(0)
     } else if (input.rotation(Rotation.Pitch) < 70) {
         basic.showString("1")
-        radio.sendValue("LR", 255)
+        sendSpeed(-255)
     } else {
         basic.showString("0")
-        radio.sendValue("LR", 0)
+        sendSpeed(-511)
     }
     basic.pause(200)
 })
